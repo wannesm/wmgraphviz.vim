@@ -8,10 +8,19 @@ endif
 let s:loaded = 1
 
 
-fu! GraphvizCompile
+fu! GraphvizCompile()
 	let cmd = '!dot -O -Tpdf ' . expand('%:p')
 	exec cmd
 endfu
 
-com! -nargs=0 GraphvizCompile :silent call GraphvizCompile
+fu! GraphvizShow()
+	exec '!open ' . expand('%:p') . '.pdf'
+endfu
+
+com! -nargs=0 GraphvizCompile :call GraphvizCompile()
+com! -nargs=0 GraphvizShow :silent call GraphvizShow()
+
+" Mappings
+nmap <buffer> <LocalLeader>ll :GraphvizCompile<CR>
+nmap <buffer> <LocalLeader>lv :GraphvizShow<CR>
 
