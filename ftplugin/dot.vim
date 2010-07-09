@@ -214,7 +214,17 @@ fu! GraphvizComplete(findstart, base)
 			endif
 		elseif line[pos - 1] =~ ',\|\['
 			" attr
-			let s:completion_type = 'attr'
+			if line[0:pos - 1] =~ '^\s*node'
+				let s:completion_type = 'attrnode'
+			elseif line[0:pos - 1] =~ '^\s*edge'
+				let s:completion_type = 'attredge'
+			elseif line[0:pos - 1] =~ '\( -> \)\|\( -- \)'
+				let s:completion_type = 'attredge'
+			elseif line[0:pos - 1] =~ '^\s*graph'
+				let s:completion_type = 'attrgraph'
+			else
+				let s:completion_type = 'attrnode'
+			endif
 		else
 			let s:completion_type = ''
 		endif
@@ -269,6 +279,24 @@ fu! GraphvizComplete(findstart, base)
 		elseif s:completion_type == 'attr'
 			for entry in s:attrs
 				if entry.word =~ '^' . escape(a:base, '/')
+					call add(suggestions, entry)
+				endif
+			endfor
+		elseif s:completion_type == 'attrnode'
+			for entry in s:attrs
+				if entry.word =~ '^' . escape(a:base, '/') && entry.menu =~ '\[.*N.*\]'
+					call add(suggestions, entry)
+				endif
+			endfor
+		elseif s:completion_type == 'attredge'
+			for entry in s:attrs
+				if entry.word =~ '^' . escape(a:base, '/') && entry.menu =~ '\[.*E.*\]'
+					call add(suggestions, entry)
+				endif
+			endfor
+		elseif s:completion_type == 'attrgraph'
+			for entry in s:attrs
+				if entry.word =~ '^' . escape(a:base, '/') && entry.menu =~ '\[.*G.*\]'
 					call add(suggestions, entry)
 				endif
 			endfor
