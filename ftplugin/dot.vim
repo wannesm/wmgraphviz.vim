@@ -74,14 +74,19 @@ let s:attrs = [
 \	{'word': 'labelfontcolor=','menu': 'Type face color for head and tail labels [E]'},
 \	{'word': 'labelfontname=', 'menu': 'Font family for head and tail labels [E]'},
 \	{'word': 'labelfontsize=', 'menu': 'Point size for head and tail labels [E]'},
+\	{'word': 'labeljust=',     'menu': 'Label justficiation [G]'},
+\	{'word': 'labelloc=',      'menu': 'Label vertical justficiation [G]'},
 \	{'word': 'layer=',         'menu': 'Overlay range [E,N]'},
 \	{'word': 'lhead=',         'menu': '[E]'},
 \	{'word': 'ltail=',         'menu': '[E]'},
 \	{'word': 'minlen=',        'menu': '[E]'},
+\	{'word': 'nodesep=',       'menu': 'Separation between nodes, in inches [G]'},
 \	{'word': 'orientation=',   'menu': 'Node rotation angle [N]'},
 \	{'word': 'peripheries=',   'menu': 'Number of node boundaries [N]'},
 \	{'word': 'rank=',          'menu': '[G]'},
 \	{'word': 'rankdir=',       'menu': '[G]'},
+\	{'word': 'ranksep=',       'menu': 'Separation between ranks, in inches [G]'},
+\	{'word': 'ratio=',         'menu': 'Aspect ratio [G]'},
 \	{'word': 'regular=',       'menu': 'Force polygon to be regular [N]'},
 \	{'word': 'samehead=',      'menu': '[E]'},
 \	{'word': 'sametail=',      'menu': '[E]'},
@@ -177,6 +182,17 @@ let s:rankdir =  [
 \	{'word': 'LR'}
 \	]
 
+let s:just =  [
+\	{'word': 'centered'},
+\	{'word': 'l'},
+\	{'word': 'r'}
+\	]
+
+let s:loc =  [
+\	{'word': 'top'},
+\	{'word': 'b'}
+\	]
+
 fu! GraphvizComplete(findstart, base)
 	"echomsg 'findstart=' . a:findstart . ', base=' . a:base
 	if a:findstart
@@ -209,18 +225,28 @@ fu! GraphvizComplete(findstart, base)
 				let s:completion_type = 'rankdir'
 			elseif labelstr == 'style'
 				let s:completion_type = 'style'
+			elseif labelstr == 'labeljust'
+				let s:completion_type = 'just'
+			elseif labelstr == 'labelloc'
+				let s:completion_type = 'loc'
 			else
 				let s:completion_type = ''
 			endif
 		elseif line[pos - 1] =~ ',\|\['
 			" attr
-			if line[0:pos - 1] =~ '^\s*node'
+			let attrstr=line[0:pos - 1]
+			" skip spaces
+			while line[pos] =~ '\s'
+				let pos += 1
+			endwhile
+
+			if attrstr =~ '^\s*node'
 				let s:completion_type = 'attrnode'
-			elseif line[0:pos - 1] =~ '^\s*edge'
+			elseif attrstr =~ '^\s*edge'
 				let s:completion_type = 'attredge'
-			elseif line[0:pos - 1] =~ '\( -> \)\|\( -- \)'
+			elseif attrstr =~ '\( -> \)\|\( -- \)'
 				let s:completion_type = 'attredge'
-			elseif line[0:pos - 1] =~ '^\s*graph'
+			elseif attrstr =~ '^\s*graph'
 				let s:completion_type = 'attrgraph'
 			else
 				let s:completion_type = 'attrnode'
@@ -272,6 +298,18 @@ fu! GraphvizComplete(findstart, base)
 			endfor
 		elseif s:completion_type == 'port'
 			for entry in s:port
+				if entry.word =~ '^' . escape(a:base, '/')
+					call add(suggestions, entry)
+				endif
+			endfor
+		elseif s:completion_type == 'just'
+			for entry in s:just
+				if entry.word =~ '^' . escape(a:base, '/')
+					call add(suggestions, entry)
+				endif
+			endfor
+		elseif s:completion_type == 'loc'
+			for entry in s:loc
 				if entry.word =~ '^' . escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
