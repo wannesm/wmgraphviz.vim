@@ -3,5 +3,11 @@ WM Graphviz
 
 Summary
 -------
-Vim script to run Graphviz, by Wannes Meert.
+Vim script for Graphviz, by Wannes Meert.
+
+Supports:
+
+- compiling: `:GraphvizCompile`, `<Leader>ll`
+- viewing: `:GraphvizView`, `<Leader>lv`
+- omnicompletion: `<C-X><C-O>`
 
