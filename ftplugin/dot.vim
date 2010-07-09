@@ -7,15 +7,32 @@ if exists('s:loaded')
 endif
 let s:loaded = 1
 
+" Settings
+
+if !exists('g:WMGraphviz_dot')
+	let g:WMGraphviz_dot = 'dot'
+endif
+
+if !exists('g:WMGraphviz_output')
+	let g:WMGraphviz_output = 'pdf'
+endif
+
+if !exists('g:WMGraphviz_viewer')
+	let g:WMGraphviz_viewer = 'open'
+endif
+
 " Compilation
 fu! GraphvizCompile()
-	let cmd = '!dot -O -Tpdf ' . expand('%:p')
+	let cmd = '!' . g:WMGraphviz_dot . ' -O -T' . g:WMGraphviz_output . ' ' . expand('%:p')
 	exec cmd
 endfu
 
 " Viewing
 fu! GraphvizShow()
-	exec '!open ' . expand('%:p') . '.pdf'
+	if !filereadable(expand('%:p') . '.pdf')
+		call GraphvizCompile()
+	endif
+	exec '!' . g:WMGraphviz_viewer . ' ' . expand('%:p') . '.pdf'
 endfu
 
 com! -nargs=0 GraphvizCompile :call GraphvizCompile()
@@ -93,7 +110,7 @@ let s:shapes = [
 \	{'word': 'invtrapezium'},
 \	{'word': 'invtriangle'},
 \	{'word': 'octagon'},
-\	{'word': 'paintext'},
+\	{'word': 'plaintext'},
 \	{'word': 'parallelogram'},
 \	{'word': 'point'},
 \	{'word': 'polygon'},
