@@ -56,11 +56,14 @@ let s:attrs = [
 \	{'word': 'bgcolor=',       'menu': 'Background color [G]'},
 \	{'word': 'color=',         'menu': 'Node shape/edge/cluster color [E,G,N]'},
 \	{'word': 'comment=',       'menu': 'Any string [E,G,N]'},
+\	{'word': 'compound=',      'menu': 'Allow edges between clusters [G]'},
+\	{'word': 'concentrate=',   'menu': 'Enables edge concentrators [G]'},
 \	{'word': 'constraints=',   'menu': 'Use edge to affect node ranking [E]'},
 \	{'word': 'decorate=',      'menu': 'If set, line between label and edge [E]'},
 \	{'word': 'dir=',           'menu': 'Direction of edge [E]'},
 \	{'word': 'distortion=',    'menu': 'Node distortion [N]'},
 \	{'word': 'fillcolor=',     'menu': 'Node/cluster fill color [G,N]'},
+\	{'word': 'fixedsize=',     'menu': 'Label text has no effect on node size [N]'},
 \	{'word': 'fontcolor=',     'menu': 'Font face color [E,G,N]'},
 \	{'word': 'fontname=',      'menu': 'Font family [E,G,N]'},
 \	{'word': 'fontsize=',      'menu': 'Point size of label [E,G,N]'},
@@ -88,6 +91,7 @@ let s:attrs = [
 \	{'word': 'ranksep=',       'menu': 'Separation between ranks, in inches [G]'},
 \	{'word': 'ratio=',         'menu': 'Aspect ratio [G]'},
 \	{'word': 'regular=',       'menu': 'Force polygon to be regular [N]'},
+\	{'word': 'rotate=',        'menu': 'If 90, set orientation to landscape [G]'},
 \	{'word': 'samehead=',      'menu': '[E]'},
 \	{'word': 'sametail=',      'menu': '[E]'},
 \	{'word': 'shape=',         'menu': 'Node shape [N]'},
@@ -139,10 +143,40 @@ let s:arrowheads =  [
 \	{'word': 'none'}
 \	]
 
+" More colornames are available but make the menu too long.
 let s:colors =  [
+\	{'word': '#000000'},
+\	{'word': '0.0 0.0 0.0'},
+\	{'word': 'beige'},
 \	{'word': 'black'},
-\	{'word': 'yellow'},
-\	{'word': 'orange'}
+\	{'word': 'blue'},
+\	{'word': 'brown'},
+\	{'word': 'cyan'},
+\	{'word': 'gray'},
+\	{'word': 'gray[0-100]'},
+\	{'word': 'green'},
+\	{'word': 'magenta'},
+\	{'word': 'orange'},
+\	{'word': 'orchid'},
+\	{'word': 'red'},
+\	{'word': 'violet'},
+\	{'word': 'white'},
+\	{'word': 'yellow'}
+\	]
+
+let s:fonts =  [
+\	{'abbr': 'Courier'          , 'word': '"Courier"'},
+\	{'abbr': 'Courier-Bold'     , 'word': '"Courier-Bold"'},
+\	{'abbr': 'Courier-Oblique'  , 'word': '"Courier-Oblique"'},
+\	{'abbr': 'Helvetica'        , 'word': '"Helvetica"'},
+\	{'abbr': 'Helvetica-Bold'   , 'word': '"Helvetica-Bold"'},
+\	{'abbr': 'Helvetica-Narrow' , 'word': '"Helvetica-Narrow"'},
+\	{'abbr': 'Helvetica-Oblique', 'word': '"Helvetica-Oblique"'},
+\	{'abbr': 'Symbol'           , 'word': '"Symbol"'},
+\	{'abbr': 'Times-Bold'       , 'word': '"Times-Bold"'},
+\	{'abbr': 'Times-BoldItalic' , 'word': '"Times-BoldItalic"'},
+\	{'abbr': 'Times-Italic'     , 'word': '"Times-Italic"'},
+\	{'abbr': 'Times-Roman'      , 'word': '"Times-Roman"'}
 \	]
 
 let s:style =  [
@@ -193,6 +227,11 @@ let s:loc =  [
 \	{'word': 'b'}
 \	]
 
+let s:boolean =  [
+\	{'word': 'true'},
+\	{'word': 'false'}
+\	]
+
 fu! GraphvizComplete(findstart, base)
 	"echomsg 'findstart=' . a:findstart . ', base=' . a:base
 	if a:findstart
@@ -213,6 +252,8 @@ fu! GraphvizComplete(findstart, base)
 
 			if labelstr == 'shape'
 				let s:completion_type = 'shape'
+			elseif labelstr =~ 'fontname'
+				let s:completion_type = 'font'
 			elseif labelstr =~ 'color'
 				let s:completion_type = 'color'
 			elseif labelstr == 'arrowhead'
@@ -227,6 +268,8 @@ fu! GraphvizComplete(findstart, base)
 				let s:completion_type = 'style'
 			elseif labelstr == 'labeljust'
 				let s:completion_type = 'just'
+			elseif labelstr == 'fixedsize' || labelstr == 'regular' || labelstr == 'constraint' || labelstr == 'labelfloat' || labelstr == 'center' || labelstr == 'compound' || labelstr == 'concentrate'
+				let s:completion_type = 'boolean'
 			elseif labelstr == 'labelloc'
 				let s:completion_type = 'loc'
 			else
@@ -268,6 +311,18 @@ fu! GraphvizComplete(findstart, base)
 			endfor
 		elseif s:completion_type == 'arrowhead'
 			for entry in s:arrowheads
+				if entry.word =~ '^' . escape(a:base, '/')
+					call add(suggestions, entry)
+				endif
+			endfor
+		elseif s:completion_type == 'boolean'
+			for entry in s:boolean
+				if entry.word =~ '^' . escape(a:base, '/')
+					call add(suggestions, entry)
+				endif
+			endfor
+		elseif s:completion_type == 'font'
+			for entry in s:fonts
 				if entry.word =~ '^' . escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
