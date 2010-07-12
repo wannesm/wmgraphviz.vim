@@ -39,9 +39,13 @@ if !exists('g:WMGraphviz_shelloptions')
 endif
 
 " Compilation
-fu! GraphvizCompile()
+" If argument given, use it as output
+fu! GraphvizCompile(...)
+	let s:output = a:0 >= 1 ? a:1 : g:WMGraphviz_output
 	let s:logfile = expand('%:p:r') . '.log'
-	let cmd = 'silent !(' . g:WMGraphviz_dot . ' -o' . expand('%:p:r') . '.' . g:WMGraphviz_output . ' -T' . g:WMGraphviz_output . ' ' . g:WMGraphviz_shelloptions . ' ' . expand('%:p') . ' 2>&1) | tee ' . expand('%:p:r') . '.log'
+	" DOT command uses -O option instead of -o because this doesn't work if
+	" there are multiple graphs in the file.
+	let cmd = '!(' . g:WMGraphviz_dot . ' -O -T' . s:output . ' ' . g:WMGraphviz_shelloptions . ' ' . expand('%:p') . ' 2>&1) | tee ' . expand('%:p:r') . '.log'
 	exec cmd
 	exec 'cfile ' . s:logfile
 endfu
@@ -51,15 +55,17 @@ fu! GraphvizShow()
 	if !filereadable(expand('%:p') . '.pdf')
 		call GraphvizCompile()
 	endif
-	exec '!' . g:WMGraphviz_viewer . ' ' . expand('%:p:r') . '.pdf'
+	exec '!' . g:WMGraphviz_viewer . ' ' . expand('%:p') . '.pdf'
 endfu
 
 com! -nargs=0 GraphvizCompile :call GraphvizCompile()
-com! -nargs=0 GraphvizShow :silent call GraphvizShow()
+com! -nargs=0 GraphvizCompilePS :call GraphvizCompile('ps')
+com! -nargs=0 GraphvizCompilePDF :call GraphvizCompile('pdf')
+com! -nargs=0 GraphvizShow : call GraphvizShow()
 
 " Mappings
-nmap <buffer> <LocalLeader>ll :GraphvizCompile<CR>
-nmap <buffer> <LocalLeader>lv :GraphvizShow<CR>
+nmap <silent> <buffer> <LocalLeader>ll :GraphvizCompile<CR>
+nmap <silent> <buffer> <LocalLeader>lv :GraphvizShow<CR>
 
 " Completion
 setlocal omnifunc=GraphvizComplete

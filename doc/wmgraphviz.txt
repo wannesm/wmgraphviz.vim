@@ -32,6 +32,14 @@ COMMANDS                                                 *wmgraphviz-commands*
 *:GraphvizCompile*
 	Create the graph in the same directory as the current dot-file.
 
+*:GraphvizCompilePDF*
+	Same as |:GraphvizCompile| but ignores the |g:WMGraphviz_output|
+	setting and uses 'pdf' as output setting.
+
+*:GraphvizCompilePS*
+	Same as |:GraphvizCompile| but ignores the |g:WMGraphviz_output|
+	setting and uses 'ps' as output setting.
+
 *:GraphvizView*
 	View the graph in the current dot-file.
 
