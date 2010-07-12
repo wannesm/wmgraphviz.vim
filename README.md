@@ -5,17 +5,28 @@ Summary
 -------
 Vim script for Graphviz, by Wannes Meert.
 
-Supports:
+Actions
+-------
 
-- compiling: `:GraphvizCompile`, `<Leader>ll`
-- viewing: `:GraphvizView`, `<Leader>lv`
-- omnicompletion: `<C-X><C-O>`
+* compiling: `:GraphvizCompile`, `<Leader>ll`
+* viewing: `:GraphvizView`, `<Leader>lv`
+* omnicompletion: `<C-X><C-O>`
 
 Settings
+--------
 
- - `g:WMGraphviz_dot` : default `dot`
- - `g:WMGraphviz_output` : default `pdf`
- - `g:WMGraphviz_viewer` : default `open`
+* `g:WMGraphviz_dot` : default `dot`
+* `g:WMGraphviz_output` : default `pdf`
+* `g:WMGraphviz_viewer` : default `open`
+* `g:WMGraphviz_shelloptions` : default ``
 
-Tested on MacOS X 10.6 with `dot` in path.
+Dependencies
+------------
+
+* Expects Graphiz's `dot` in the path.
+
+Contact
+-------
+
+Wannes Meert, wannesm@gmail.com
 

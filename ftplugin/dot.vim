@@ -21,9 +21,13 @@ if !exists('g:WMGraphviz_viewer')
 	let g:WMGraphviz_viewer = 'open'
 endif
 
+if !exists('g:WMGraphviz_shelloptions')
+	let g:WMGraphviz_shelloptions = ''
+endif
+
 " Compilation
 fu! GraphvizCompile()
-	let cmd = '!' . g:WMGraphviz_dot . ' -O -T' . g:WMGraphviz_output . ' ' . expand('%:p')
+	let cmd = '!' . g:WMGraphviz_dot . ' -o' . expand('%:p:r') . '.' . g:WMGraphviz_output . ' -T' . g:WMGraphviz_output . ' ' . g:WMGraphviz_shelloptions . ' ' . expand('%:p')
 	exec cmd
 endfu
 
@@ -32,7 +36,7 @@ fu! GraphvizShow()
 	if !filereadable(expand('%:p') . '.pdf')
 		call GraphvizCompile()
 	endif
-	exec '!' . g:WMGraphviz_viewer . ' ' . expand('%:p') . '.pdf'
+	exec '!' . g:WMGraphviz_viewer . ' ' . expand('%:p:r') . '.pdf'
 endfu
 
 com! -nargs=0 GraphvizCompile :call GraphvizCompile()
@@ -43,7 +47,6 @@ nmap <buffer> <LocalLeader>ll :GraphvizCompile<CR>
 nmap <buffer> <LocalLeader>lv :GraphvizShow<CR>
 
 " Completion
-
 setlocal omnifunc=GraphvizComplete
 let s:completion_type = ''
 
