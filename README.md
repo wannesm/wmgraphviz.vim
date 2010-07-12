@@ -3,7 +3,7 @@ WM Graphviz
 
 Summary
 -------
-Vim script for Graphviz, by Wannes Meert.
+Vim plugin for [Graphviz](http://www.graphviz.org), by Wannes Meert.
 
 Actions
 -------
@@ -23,7 +23,7 @@ Settings
 Dependencies
 ------------
 
-* Expects Graphiz's `dot` in the path.
+* Graphiz's `dot`.
 
 Contact
 -------

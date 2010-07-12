@@ -18,7 +18,19 @@ if !exists('g:WMGraphviz_output')
 endif
 
 if !exists('g:WMGraphviz_viewer')
-	let g:WMGraphviz_viewer = 'open'
+	if has('mac')
+		let g:WMGraphviz_viewer = 'open'
+	elseif has ('unix')
+		if g:WMGraphviz_output == 'pdf'
+			let g:WMGraphviz_viewer = 'acroread'
+		elseif g:WMGraphviz_output == 'ps'
+			let g:WMGraphviz_viewer = 'gv'
+		else
+			let g:WMGraphviz_viewer = 'acroread'
+		endif
+	else
+		let g:WMGraphviz_viewer = 'open'
+	endif
 endif
 
 if !exists('g:WMGraphviz_shelloptions')
@@ -27,8 +39,10 @@ endif
 
 " Compilation
 fu! GraphvizCompile()
-	let cmd = '!' . g:WMGraphviz_dot . ' -o' . expand('%:p:r') . '.' . g:WMGraphviz_output . ' -T' . g:WMGraphviz_output . ' ' . g:WMGraphviz_shelloptions . ' ' . expand('%:p')
+	let s:logfile = expand('%:p:r') . '.log'
+	let cmd = 'silent !(' . g:WMGraphviz_dot . ' -o' . expand('%:p:r') . '.' . g:WMGraphviz_output . ' -T' . g:WMGraphviz_output . ' ' . g:WMGraphviz_shelloptions . ' ' . expand('%:p') . ' 2>&1) | tee ' . expand('%:p:r') . '.log'
 	exec cmd
+	exec 'cfile ' . s:logfile
 endfu
 
 " Viewing
@@ -403,5 +417,9 @@ fu! GraphvizComplete(findstart, base)
 		return suggestions
 	endif
 endfu
+
+" Quickfix list
+
+setlocal errorformat=%EError:\ %f:%l:%m,%+Ccontext:\ %.%#,%WWarning:\ %m
 
 

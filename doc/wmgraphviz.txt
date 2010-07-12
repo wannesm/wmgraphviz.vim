@@ -62,9 +62,10 @@ SETTINGS                                                 *wmgraphviz-settings*
 
 	Set the output for dot.
 
-*g:WMGraphviz_viewer*		Default: 'open'.
+*g:WMGraphviz_viewer*		Default: 'open'/'acroread'/'gv'.
 
-	Set the viewer application.
+	Set the viewer application. Default is 'open' for 'pdf' on Mac and
+	'acroread' on *NIX. For 'ps' it is 'gv'.
 
 *g:WMGraphviz_shelloptions*	Default: ''.
 
