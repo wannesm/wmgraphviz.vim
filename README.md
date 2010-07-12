@@ -5,12 +5,13 @@ Summary
 -------
 Vim plugin for [Graphviz](http://www.graphviz.org), by Wannes Meert.
 
-Actions
--------
+Features
+--------
 
 * compiling: `:GraphvizCompile`, `<Leader>ll`
 * viewing: `:GraphvizView`, `<Leader>lv`
 * omnicompletion: `<C-X><C-O>`
+* quickfix window for errors and warnings
 
 Settings
 --------
@@ -23,7 +24,7 @@ Settings
 Dependencies
 ------------
 
-* Graphiz's `dot`.
+* [Graphiz](http://www.graphgiz.org)'s `dot`.
 
 Contact
 -------

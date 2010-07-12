@@ -1,6 +1,7 @@
 " wmgraphviz.vim plugin
 " Author: Wannes Meert
 " Email: wannesm@gmail.com
+" Version: 1.0
 
 if exists('s:loaded')
 	finish
