@@ -15,11 +15,6 @@ all:
 	@echo No default action, you probably want to use \'dist\'.
 
 dist:
-	echo ${DISTFILES} > MANIFEST;
-	cat MANIFEST | tr ' ' '\n' | sed -e "s/^/${DIST}\//g" > MANIFEST;
-	(cd ..; ln -s ${DIR} ${DIST});
-	(cd ..; tar -czvf ${DIR}/${DIST}.tgz `cat ${DIR}/MANIFEST`);
-	(cd ..; rm ${DIST});
-	rm MANIFEST;
+	tar -czvf ${DIST}.tgz ${DISTFILES}
 
 
