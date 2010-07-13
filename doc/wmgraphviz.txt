@@ -6,9 +6,11 @@ This plugin provides:
 - Omnicompletion for the attribute names and specific values.
 
 
+|wmgraphviz-requirements|         REQUIREMENTS
 |wmgraphviz-mappings|             MAPPINGS
 |wmgraphviz-commands|             COMMANDS
 |wmgraphviz-omnicompletion|       OMNICOMPLETION
+|wmgraphviz-contact|              CONTACT
 
 
 REQUIREMENTS                                         *wmgraphviz-requirements*
