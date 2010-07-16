@@ -21,6 +21,10 @@ This plugin expects Graphviz dot (http://www.graphviz.org/) to be installed in
 the path. If dot is installed, but not found an explicit path can be given
 by means of the |g:WMGraphviz_dot| setting.
 
+Installing instruction for Graphviz are available on
+http://www.graphviz.org/Download.php. Mac users can also install from
+http://www.macports.org.
+
 
 MAPPINGS                                                 *wmgraphviz-mappings*
 
@@ -74,20 +78,21 @@ is installed, there are some snippets provided. For example >
 
 SETTINGS                                                 *wmgraphviz-settings*
 
-*g:WMGraphviz_dot*			Default: 'dot'
+*g:WMGraphviz_dot*                                        Default: 'dot'
 
 	Set the path to dot (or neato).
 
-*g:WMGraphviz_output*		Default: 'pdf'.
+*g:WMGraphviz_output*                                     Default: 'pdf'.
 
-	Set the output for dot.
+	Set the output for dot. For acceptable formats see
+	http://www.graphviz.org/doc/info/output.html.
 
-*g:WMGraphviz_viewer*		Default: 'open'/'acroread'/'gv'.
+*g:WMGraphviz_viewer*                        Default: 'open'/'acroread'/'gv'.
 
 	Set the viewer application. Default is 'open' for 'pdf' on Mac and
 	'acroread' on *NIX. For 'ps' it is 'gv'.
 
-*g:WMGraphviz_shelloptions*	Default: ''.
+*g:WMGraphviz_shelloptions*                                Default: ''.
 
 	Set the options passed on to dot.
 

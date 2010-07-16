@@ -58,6 +58,7 @@ fu! GraphvizShow()
 	exec '!' . g:WMGraphviz_viewer . ' ' . expand('%:p') . '.pdf'
 endfu
 
+" Available functions
 com! -nargs=0 GraphvizCompile :call GraphvizCompile()
 com! -nargs=0 GraphvizCompilePS :call GraphvizCompile('ps')
 com! -nargs=0 GraphvizCompilePDF :call GraphvizCompile('pdf')
@@ -71,7 +72,7 @@ nmap <silent> <buffer> <LocalLeader>lv :GraphvizShow<CR>
 setlocal omnifunc=GraphvizComplete
 let s:completion_type = ''
 
-" Dictionaries
+" Completion dictionaries
 
 let s:attrs = [
 \	{'word': 'arrowhead=',     'menu': 'Style of arrowhead at head end [E]'},
@@ -217,14 +218,16 @@ let s:dir =  [
 \	]
 
 let s:port =  [
+\	{'word': '_',   'menu': 'appropriate side or center (default)' },
+\	{'word': 'c',   'menu': 'center'},
+\	{'word': 'e'},
 \	{'word': 'n'},
 \	{'word': 'ne'},
-\	{'word': 'e'},
-\	{'word': 'se'},
+\	{'word': 'nw'},
 \	{'word': 's'},
+\	{'word': 'se'},
 \	{'word': 'sw'},
 \	{'word': 'w'},
-\	{'word': 'nw'}
 \	]
 
 let s:rank =  [
@@ -236,8 +239,10 @@ let s:rank =  [
 \	]
 
 let s:rankdir =  [
+\	{'word': 'BT'},
+\	{'word': 'LR'},
+\	{'word': 'RL'},
 \	{'word': 'TB'},
-\	{'word': 'LR'}
 \	]
 
 let s:just =  [
@@ -247,8 +252,9 @@ let s:just =  [
 \	]
 
 let s:loc =  [
-\	{'word': 'top'},
-\	{'word': 'b'}
+\	{'word': 'b', 'menu': 'bottom'},
+\	{'word': 'c', 'menu': 'center'},
+\	{'word': 't', 'menu': 'top'},
 \	]
 
 let s:boolean =  [

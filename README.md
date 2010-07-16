@@ -25,7 +25,7 @@ Settings
 Dependencies
 ------------
 
-* [Graphiz](http://www.graphgiz.org)'s `dot`.
+* [Graphiz](http://www.graphviz.org)'s `dot`.
 
 Contact
 -------
