@@ -2,7 +2,7 @@
 *wmgraphviz*
 
 This plugin provides:
-- Complilation for Graphviz
+- Compilation for Graphviz
 - Omnicompletion for the attribute names and specific values.
 
 
@@ -10,6 +10,8 @@ This plugin provides:
 |wmgraphviz-mappings|             MAPPINGS
 |wmgraphviz-commands|             COMMANDS
 |wmgraphviz-omnicompletion|       OMNICOMPLETION
+|wmgraphviz-snipmate|             SNIPMATE
+|wmgraphviz-settings|             SETTINGS
 |wmgraphviz-contact|              CONTACT
 
 
@@ -60,6 +62,14 @@ And, >
 	node[shape=pl<C-X><C-O>
 completes to >
 	node[shape=plaintext
+
+
+SNIPMATE                                                 *wmgraphviz-snipmate*
+
+If the snipMate plugin (http://www.vim.org/scripts/script.php?script_id=2540)
+is installed, there are some snippets provided. For example >
+	graph<TAB>
+	digraph<TAB>
 
 
 SETTINGS                                                 *wmgraphviz-settings*

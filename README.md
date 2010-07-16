@@ -8,10 +8,11 @@ Vim plugin for [Graphviz](http://www.graphviz.org).
 Features
 --------
 
-* compiling: `:GraphvizCompile`, `<Leader>ll`
-* viewing: `:GraphvizView`, `<Leader>lv`
-* omnicompletion: `<C-X><C-O>`
-* quickfix window for errors and warnings
+* Compiling: `:GraphvizCompile`, `<Leader>ll`
+* Viewing: `:GraphvizView`, `<Leader>lv`
+* Omnicompletion: `<C-X><C-O>`
+* Quickfix window for errors and warnings
+* Snipmate support
 
 Settings
 --------
