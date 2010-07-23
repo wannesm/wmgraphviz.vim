@@ -69,7 +69,6 @@ nmap <silent> <buffer> <LocalLeader>ll :GraphvizCompile<CR>
 nmap <silent> <buffer> <LocalLeader>lv :GraphvizShow<CR>
 
 " Completion
-setlocal omnifunc=GraphvizComplete
 let s:completion_type = ''
 
 " Completion dictionaries
@@ -268,17 +267,28 @@ fu! GraphvizComplete(findstart, base)
 		" return the starting point of the word
 		let line = getline('.')
 		let pos = col('.') - 1
-		while pos > 0 && line[pos - 1] !~ '=\|,\|\['
+		while pos > 0 && line[pos - 1] !~ '=\|,\|\[\|\s'
 			let pos -= 1
 		endwhile
+		let withspacepos = pos
+		if line[withspacepos - 1] =~ '\s'
+			while withspacepos > 0 && line[withspacepos - 1] !~ '=\|,\|\['
+				let withspacepos -= 1
+			endwhile
+		endif
 
-		if line[pos - 1] == '='
+		if line[withspacepos - 1] == '='
 			" label=...?
-			let labelpos = pos - 1
+			let labelpos = withspacepos - 1
+			" ignore spaces
+			while labelpos > 0 && line[labelpos - 1] =~ '\s'
+				let labelpos -= 1
+				let withspacepos -= 1
+			endwhile
 			while labelpos > 0 && line[labelpos - 1] =~ '[a-z]'
 				let labelpos -= 1
 			endwhile
-			let labelstr=strpart(line, labelpos, pos - 1 - labelpos)
+			let labelstr=strpart(line, labelpos, withspacepos - 1 - labelpos)
 
 			if labelstr == 'shape'
 				let s:completion_type = 'shape'
@@ -305,12 +315,12 @@ fu! GraphvizComplete(findstart, base)
 			else
 				let s:completion_type = ''
 			endif
-		elseif line[pos - 1] =~ ',\|\['
+		elseif line[withspacepos - 1] =~ ',\|\['
 			" attr
-			let attrstr=line[0:pos - 1]
+			let attrstr=line[0:withspacepos - 1]
 			" skip spaces
-			while line[pos] =~ '\s'
-				let pos += 1
+			while line[withspacepos] =~ '\s'
+				let withspacepos += 1
 			endwhile
 
 			if attrstr =~ '^\s*node'
@@ -430,6 +440,8 @@ fu! GraphvizComplete(findstart, base)
 		return suggestions
 	endif
 endfu
+
+setlocal omnifunc=GraphvizComplete
 
 " Quickfix list
 
