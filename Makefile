@@ -7,7 +7,7 @@
 
 .PHONY : dist
 
-DISTFILES=doc/wmgraphviz.txt ftplugin/dot.vim
+DISTFILES=doc/wmgraphviz.txt ftplugin/dot.vim snippets/dot.snippets
 DIR=wmgraphviz.vim.git
 DIST=wmgraphviz.vim
 
@@ -17,4 +17,6 @@ all:
 dist:
 	tar -czvf ${DIST}.tgz ${DISTFILES}
 
+clean:
+	rm -rf *.tgz
 
