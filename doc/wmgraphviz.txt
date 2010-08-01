@@ -2,16 +2,20 @@
 *wmgraphviz*
 
 This plugin provides:
-- Compilation for Graphviz
+- Compilation for Graphviz dot-files.
 - Omnicompletion for the attribute names and specific values.
+- Extensions for working with SnipMate and dot2tex.
 
 
 |wmgraphviz-requirements|         REQUIREMENTS
 |wmgraphviz-mappings|             MAPPINGS
 |wmgraphviz-commands|             COMMANDS
 |wmgraphviz-omnicompletion|       OMNICOMPLETION
-|wmgraphviz-snipmate|             SNIPMATE
 |wmgraphviz-settings|             SETTINGS
+
+|wmgraphviz-snipmate|             SNIPMATE
+|wmgraphviz-dot2tex|              DOT2TEX
+
 |wmgraphviz-contact|              CONTACT
 
 
@@ -68,21 +72,13 @@ completes to >
 	node[shape=plaintext
 
 
-SNIPMATE                                                 *wmgraphviz-snipmate*
-
-If the snipMate plugin (http://www.vim.org/scripts/script.php?script_id=2540)
-is installed, there are some snippets provided. For example >
-	graph<TAB>
-	digraph<TAB>
-
-
 SETTINGS                                                 *wmgraphviz-settings*
 
 *g:WMGraphviz_dot*                                        Default: 'dot'
 
 	Set the path to dot (or neato).
 
-*g:WMGraphviz_output*                                     Default: 'pdf'.
+*g:WMGraphviz_output*                                     Default: 'pdf'
 
 	Set the output for dot. For acceptable formats see
 	http://www.graphviz.org/doc/info/output.html.
@@ -92,9 +88,40 @@ SETTINGS                                                 *wmgraphviz-settings*
 	Set the viewer application. Default is 'open' for 'pdf' on Mac and
 	'acroread' on *NIX. For 'ps' it is 'gv'.
 
-*g:WMGraphviz_shelloptions*                                Default: ''.
+*g:WMGraphviz_shelloptions*                                Default: ''
 
 	Set the options passed on to dot.
+
+
+SNIPMATE                                                 *wmgraphviz-snipmate*
+
+If the snipMate plugin (http://www.vim.org/scripts/script.php?script_id=2540)
+is installed, there are some snippets provided. For example >
+	graph<TAB>
+	digraph<TAB>
+
+
+DOT2TEX                                                   *wmgraphviz-dot2tex*
+
+If the dot2tex binary (http://www.fauskes.net/code/dot2tex/) is installed,
+you can use an extra command:
+
+*:GraphvizCompileLaTeX*
+	Compiles the dot-file to a LaTeX-file.
+
+Available keymapping:
+
+<Leader>lt		|:GraphvizCompileLaTeX|
+
+Available settings:
+
+*g:WMGraphviz_tex2dot*                                     Default: 'dot2tex'
+
+	Path to dot2tex binary.
+
+*g:WMGraphviz_tex2dotoptions*                              Default: '-tmath'
+
+	Options for tex2dot.
 
 
 CONTACT                                                   *wmgraphviz-contact*

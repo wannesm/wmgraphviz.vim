@@ -38,34 +38,53 @@ if !exists('g:WMGraphviz_shelloptions')
 	let g:WMGraphviz_shelloptions = ''
 endif
 
+if !exists('g:WMGraphviz_dot2tex')
+	let g:WMGraphviz_dot2tex = 'dot2tex'
+endif
+
+if !exists('g:WMGraphviz_dot2texoptions')
+	let g:WMGraphviz_dot2texoptions = '-tmath'
+endif
+
 " Compilation
 " If argument given, use it as output
 fu! GraphvizCompile(...)
 	let s:output = a:0 >= 1 ? a:1 : g:WMGraphviz_output
-	let s:logfile = expand('%:p:r') . '.log'
+	let s:logfile = expand('%:p:r').'.log'
 	" DOT command uses -O option instead of -o because this doesn't work if
 	" there are multiple graphs in the file.
-	let cmd = '!(' . g:WMGraphviz_dot . ' -O -T' . s:output . ' ' . g:WMGraphviz_shelloptions . ' ' . expand('%:p') . ' 2>&1) | tee ' . expand('%:p:r') . '.log'
+	let cmd = '!('.g:WMGraphviz_dot.' -O -T'.s:output.' '.g:WMGraphviz_shelloptions.' '.expand('%:p').' 2>&1) | tee '.expand('%:p:r').'.log'
 	exec cmd
-	exec 'cfile ' . s:logfile
+	exec 'cfile '.s:logfile
+endfu
+
+fu! GraphvizCompileToLaTeX(...)
+	let s:logfile = expand('%:p:r').'.log'
+	" DOT command uses -O option instead of -o because this doesn't work if
+	" there are multiple graphs in the file.
+	let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.expand('%:p').' > '.expand('%:p:r').'.tex) 2>&1) | tee '.expand('%:p:r').'.log'
+	exec cmd
+	exec 'cfile '.s:logfile
 endfu
 
 " Viewing
 fu! GraphvizShow()
-	if !filereadable(expand('%:p') . '.pdf')
+	if !filereadable(expand('%:p').'.pdf')
 		call GraphvizCompile()
 	endif
-	exec '!' . g:WMGraphviz_viewer . ' ' . expand('%:p') . '.pdf'
+	exec '!'.g:WMGraphviz_viewer.' '.expand('%:p').'.pdf'
 endfu
 
 " Available functions
 com! -nargs=0 GraphvizCompile :call GraphvizCompile()
 com! -nargs=0 GraphvizCompilePS :call GraphvizCompile('ps')
 com! -nargs=0 GraphvizCompilePDF :call GraphvizCompile('pdf')
+com! -nargs=0 GraphvizCompileToLaTeX :call GraphvizCompileToLaTeX()
 com! -nargs=0 GraphvizShow : call GraphvizShow()
 
 " Mappings
 nmap <silent> <buffer> <LocalLeader>ll :GraphvizCompile<CR>
+nmap <silent> <buffer> <LocalLeader>lt :GraphvizCompileToLaTeX<CR>
 nmap <silent> <buffer> <LocalLeader>lv :GraphvizShow<CR>
 
 " Completion
@@ -262,7 +281,7 @@ let s:boolean =  [
 \	]
 
 fu! GraphvizComplete(findstart, base)
-	"echomsg 'findstart=' . a:findstart . ', base=' . a:base
+	"echomsg 'findstart='.a:findstart.', base='.a:base
 	if a:findstart
 		" return the starting point of the word
 		let line = getline('.')
@@ -345,91 +364,91 @@ fu! GraphvizComplete(findstart, base)
 
 		if s:completion_type == 'shape'
 			for entry in s:shapes
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'arrowhead'
 			for entry in s:arrowheads
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'boolean'
 			for entry in s:boolean
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'font'
 			for entry in s:fonts
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'color'
 			for entry in s:colors
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'rank'
 			for entry in s:rank
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'rankdir'
 			for entry in s:rankdir
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'style'
 			for entry in s:style
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'port'
 			for entry in s:port
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'just'
 			for entry in s:just
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'loc'
 			for entry in s:loc
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'attr'
 			for entry in s:attrs
-				if entry.word =~ '^' . escape(a:base, '/')
+				if entry.word =~ '^'.escape(a:base, '/')
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'attrnode'
 			for entry in s:attrs
-				if entry.word =~ '^' . escape(a:base, '/') && entry.menu =~ '\[.*N.*\]'
+				if entry.word =~ '^'.escape(a:base, '/') && entry.menu =~ '\[.*N.*\]'
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'attredge'
 			for entry in s:attrs
-				if entry.word =~ '^' . escape(a:base, '/') && entry.menu =~ '\[.*E.*\]'
+				if entry.word =~ '^'.escape(a:base, '/') && entry.menu =~ '\[.*E.*\]'
 					call add(suggestions, entry)
 				endif
 			endfor
 		elseif s:completion_type == 'attrgraph'
 			for entry in s:attrs
-				if entry.word =~ '^' . escape(a:base, '/') && entry.menu =~ '\[.*G.*\]'
+				if entry.word =~ '^'.escape(a:base, '/') && entry.menu =~ '\[.*G.*\]'
 					call add(suggestions, entry)
 				endif
 			endfor
