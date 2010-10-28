@@ -1,0 +1,6 @@
+// Simple test file
+digraph SimpleTest {
+	a -> b;
+	b -> c;
+	c -> a;
+}
