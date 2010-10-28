@@ -53,18 +53,18 @@ fu! GraphvizCompile(...)
 	let s:logfile = expand('%:p:r').'.log'
 	" DOT command uses -O option instead of -o because this doesn't work if
 	" there are multiple graphs in the file.
-	let cmd = '!('.g:WMGraphviz_dot.' -O -T'.s:output.' '.g:WMGraphviz_shelloptions.' '.expand('%:p').' 2>&1) | tee '.expand('%:p:r').'.log'
+	let cmd = '!('.g:WMGraphviz_dot.' -O -T'.s:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' 2>&1) | tee '.shellescape(expand('%:p:r').'.log')
 	exec cmd
-	exec 'cfile '.s:logfile
+	exec 'cfile '.escape(s:logfile, ' \"!?''')
 endfu
 
 fu! GraphvizCompileToLaTeX(...)
 	let s:logfile = expand('%:p:r').'.log'
 	" DOT command uses -O option instead of -o because this doesn't work if
 	" there are multiple graphs in the file.
-	let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.expand('%:p').' > '.expand('%:p:r').'.tex) 2>&1) | tee '.expand('%:p:r').'.log'
+	let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.shellescape(expand('%:p')).' > '.shellescape(expand('%:p:r').'.tex').') 2>&1) | tee '.shellescape(expand('%:p:r').'.log')
 	exec cmd
-	exec 'cfile '.s:logfile
+	exec 'cfile '.escape(s:logfile, ' \"!?''')
 endfu
 
 " Viewing
@@ -72,7 +72,7 @@ fu! GraphvizShow()
 	if !filereadable(expand('%:p').'.pdf')
 		call GraphvizCompile()
 	endif
-	exec '!'.g:WMGraphviz_viewer.' '.expand('%:p').'.pdf'
+	exec '!'.g:WMGraphviz_viewer.' '.shellescape(expand('%:p').'.pdf')
 endfu
 
 " Available functions
