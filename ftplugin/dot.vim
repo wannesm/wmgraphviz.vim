@@ -22,12 +22,16 @@ if !exists('g:WMGraphviz_viewer')
 	if has('mac')
 		let g:WMGraphviz_viewer = 'open'
 	elseif has ('unix')
-		if g:WMGraphviz_output == 'pdf'
-			let g:WMGraphviz_viewer = 'acroread'
-		elseif g:WMGraphviz_output == 'ps'
-			let g:WMGraphviz_viewer = 'gv'
+		if executable('xdg-open')
+			let g:WMGraphviz_viewer = 'xdg-open'
 		else
-			let g:WMGraphviz_viewer = 'acroread'
+			if g:WMGraphviz_output == 'pdf'
+				let g:WMGraphviz_viewer = 'acroread'
+			elseif g:WMGraphviz_output == 'ps'
+				let g:WMGraphviz_viewer = 'gv'
+			else
+				let g:WMGraphviz_viewer = 'acroread'
+			endif
 		endif
 	else
 		let g:WMGraphviz_viewer = 'open'

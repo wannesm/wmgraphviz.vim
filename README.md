@@ -19,7 +19,7 @@ Settings
 
 * `g:WMGraphviz_dot` : default `"dot"`
 * `g:WMGraphviz_output` : default `"pdf"`
-* `g:WMGraphviz_viewer` : default `"open"`
+* `g:WMGraphviz_viewer` : default `"open"` (Mac) or `"xdg-open"` (Unix)
 * `g:WMGraphviz_shelloptions` : default `""`
 
 Dependencies

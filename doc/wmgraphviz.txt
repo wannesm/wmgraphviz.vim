@@ -83,10 +83,11 @@ SETTINGS                                                 *wmgraphviz-settings*
 	Set the output for dot. For acceptable formats see
 	http://www.graphviz.org/doc/info/output.html.
 
-*g:WMGraphviz_viewer*                        Default: 'open'/'acroread'/'gv'.
+*g:WMGraphviz_viewer*                         Default: 'open'/'xdg-open'
 
-	Set the viewer application. Default is 'open' for 'pdf' on Mac and
-	'acroread' on *NIX. For 'ps' it is 'gv'.
+	Set the viewer application. Default is 'open' on Mac and 'xdg-open'
+	on *NIX. If 'xdg-open' is not found, the plugin will fall back to
+	'acroread' for 'pdf' and 'gv' for 'ps' files.
 
 *g:WMGraphviz_shelloptions*                                Default: ''
 
