@@ -25,9 +25,7 @@ if !exists('g:WMGraphviz_viewer')
 		if executable('xdg-open')
 			let g:WMGraphviz_viewer = 'xdg-open'
 		else
-			if g:WMGraphviz_output == 'pdf'
-				let g:WMGraphviz_viewer = 'acroread'
-			elseif g:WMGraphviz_output == 'ps'
+			if g:WMGraphviz_output == 'ps'
 				let g:WMGraphviz_viewer = 'gv'
 			else
 				let g:WMGraphviz_viewer = 'acroread'
