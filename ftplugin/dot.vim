@@ -51,6 +51,11 @@ endif
 " Compilation
 " If argument given, use it as output
 fu! GraphvizCompile(...)
+	if !executable(g:WMGraphviz_dot)
+		echoerr 'The "'.g:WMGraphviz_dot.'" executable was not found.'
+		return
+	endif
+
 	let s:output = a:0 >= 1 ? a:1 : g:WMGraphviz_output
 	let s:logfile = expand('%:p:r').'.log'
 	" DOT command uses -O option instead of -o because this doesn't work if
@@ -61,6 +66,11 @@ fu! GraphvizCompile(...)
 endfu
 
 fu! GraphvizCompileToLaTeX(...)
+	if !executable(g:WMGraphviz_dot2tex)
+		echoerr 'The "'.g:WMGraphviz_dot2tex.'" executable was not found.'
+		return
+	endif
+
 	let s:logfile = expand('%:p:r').'.log'
 	" DOT command uses -O option instead of -o because this doesn't work if
 	" there are multiple graphs in the file.
@@ -74,6 +84,12 @@ fu! GraphvizShow()
 	if !filereadable(expand('%:p').'.pdf')
 		call GraphvizCompile()
 	endif
+
+	if !executable(g:WMGraphviz_viewer)
+		echoerr 'Viewer program not found: "'.g:WMGraphviz_viewer.'"'
+		return
+	endif
+
 	exec '!'.g:WMGraphviz_viewer.' '.shellescape(expand('%:p').'.pdf')
 endfu
 
