@@ -81,7 +81,7 @@ endfu
 
 " Viewing
 fu! GraphvizShow()
-	if !filereadable(expand('%:p').'.pdf')
+	if !filereadable(expand('%:p').'.'.g:WMGraphviz_output)
 		call GraphvizCompile()
 	endif
 
@@ -90,7 +90,7 @@ fu! GraphvizShow()
 		return
 	endif
 
-	exec '!'.g:WMGraphviz_viewer.' '.shellescape(expand('%:p').'.pdf')
+	exec '!'.g:WMGraphviz_viewer.' '.shellescape(expand('%:p').'.'.g:WMGraphviz_output)
 endfu
 
 " Available functions
