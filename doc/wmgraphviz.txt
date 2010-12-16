@@ -6,6 +6,7 @@ This plugin provides:
 - Omnicompletion for the attribute names and specific values.
 - Extensions for working with SnipMate and dot2tex.
 
+==============================================================================
 
 |wmgraphviz-requirements|         REQUIREMENTS
 |wmgraphviz-mappings|             MAPPINGS
@@ -18,6 +19,7 @@ This plugin provides:
 
 |wmgraphviz-contact|              CONTACT
 
+==============================================================================
 
 REQUIREMENTS                                         *wmgraphviz-requirements*
 
@@ -29,6 +31,7 @@ Installing instruction for Graphviz are available on
 http://www.graphviz.org/Download.php. Mac users can also install from
 http://www.macports.org.
 
+==============================================================================
 
 MAPPINGS                                                 *wmgraphviz-mappings*
 
@@ -38,6 +41,7 @@ MAPPINGS                                                 *wmgraphviz-mappings*
 <Leader>lv		|:GraphvizView|
 	View the graph in the current dot-file.
 
+==============================================================================
 
 COMMANDS                                                 *wmgraphviz-commands*
 
@@ -55,6 +59,7 @@ COMMANDS                                                 *wmgraphviz-commands*
 *:GraphvizView*
 	View the graph in the current dot-file.
 
+==============================================================================
 
 OMNICOMPLETION                                     *wmgraphviz-omnicompletion*
 
@@ -71,6 +76,7 @@ And, >
 completes to >
 	node[shape=plaintext
 
+==============================================================================
 
 SETTINGS                                                 *wmgraphviz-settings*
 
@@ -93,6 +99,7 @@ SETTINGS                                                 *wmgraphviz-settings*
 
 	Set the options passed on to dot.
 
+==============================================================================
 
 SNIPMATE                                                 *wmgraphviz-snipmate*
 
@@ -101,6 +108,7 @@ is installed, there are some snippets provided. For example >
 	graph<TAB>
 	digraph<TAB>
 
+==============================================================================
 
 DOT2TEX                                                   *wmgraphviz-dot2tex*
 
@@ -124,10 +132,12 @@ Available settings:
 
 	Options for tex2dot.
 
+==============================================================================
 
 CONTACT                                                   *wmgraphviz-contact*
 
 Plugin by Wannes Meert, mailto:wannesm@gmail.com, 2010.
 
+==============================================================================
 
 vim:tw=78:ts=8:sw=8:ft=help:norl:noet:
