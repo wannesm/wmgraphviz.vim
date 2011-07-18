@@ -38,7 +38,7 @@ MAPPINGS                                                 *wmgraphviz-mappings*
 <Leader>ll		|:GraphvizCompile|
 	Create the graph in the same directory as the current dot-file.
 
-<Leader>lv		|:GraphvizView|
+<Leader>lv		|:GraphvizShow|
 	View the graph in the current dot-file.
 
 ==============================================================================
@@ -56,7 +56,7 @@ COMMANDS                                                 *wmgraphviz-commands*
 	Same as |:GraphvizCompile| but ignores the |g:WMGraphviz_output|
 	setting and uses 'ps' as output setting.
 
-*:GraphvizView*
+*:GraphvizShow*
 	View the graph in the current dot-file.
 
 ==============================================================================
