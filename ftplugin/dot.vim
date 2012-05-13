@@ -90,7 +90,7 @@ fu! GraphvizShow()
 		return
 	endif
 
-	exec '!'.g:WMGraphviz_viewer.' '.shellescape(expand('%:p').'.'.g:WMGraphviz_output)
+	exec '!'.g:WMGraphviz_viewer.' '.shellescape(expand('%:p').'.'.g:WMGraphviz_output).' &'
 endfu
 
 " Available functions
