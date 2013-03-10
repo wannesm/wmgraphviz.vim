@@ -124,13 +124,13 @@ Available keymapping:
 
 Available settings:
 
-*g:WMGraphviz_tex2dot*                                     Default: 'dot2tex'
+*g:WMGraphviz_dot2tex*                                     Default: 'dot2tex'
 
 	Path to dot2tex binary.
 
-*g:WMGraphviz_tex2dotoptions*                              Default: '-tmath'
+*g:WMGraphviz_dot2texoptions*                              Default: '-tmath'
 
-	Options for tex2dot.
+	Options for dot2tex.
 
 ==============================================================================
 
