@@ -40,6 +40,8 @@ Contributions
 -------------
 
 * [Bjørn Forsman](https://github.com/bjornfor)
+* [marcovzla](https://github.com/marcovzla)
+* [Johannes Holzfuß](https://github.com/DataWraith)
 
 Contact
 -------
