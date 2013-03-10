@@ -112,6 +112,17 @@ fu! GraphvizShow()
 	exec '!'.g:WMGraphviz_viewer.' '.shellescape(expand('%:p').'.'.g:WMGraphviz_output).' &'
 endfu
 
+" Interactive viewing. "dot -Txlib <file.gv>" uses inotify to immediately
+" redraw image when the input file is changed.
+fu! GraphvizInteractive()
+	if !executable(g:WMGraphviz_dot)
+		echoerr 'The "'.g:WMGraphviz_dot.'" executable was not found.'
+		return
+	endif
+
+	exec '!'.g:WMGraphviz_dot.' -Txlib '.shellescape(expand('%:p')).' &'
+endfu
+
 " Available functions
 com! -nargs=0 GraphvizCompile :call GraphvizCompile(g:WMGraphviz_dot, g:WMGraphviz_output)
 com! -nargs=0 GraphvizCompilePS :call GraphvizCompile(g:WMGraphviz_dot, 'ps')
@@ -125,11 +136,13 @@ com! -nargs=0 GraphvizCompileTwopi :call GraphvizCompile(g:WMGraphviz_twopi, g:W
 com! -nargs=0 GraphvizCompileToLaTeX :call GraphvizCompileToLaTeX()
 
 com! -nargs=0 GraphvizShow : call GraphvizShow()
+com! -nargs=0 GraphvizInteractive : call GraphvizInteractive()
 
 " Mappings
 nmap <silent> <buffer> <LocalLeader>ll :GraphvizCompile<CR>
 nmap <silent> <buffer> <LocalLeader>lt :GraphvizCompileToLaTeX<CR>
 nmap <silent> <buffer> <LocalLeader>lv :GraphvizShow<CR>
+nmap <silent> <buffer> <LocalLeader>li :GraphvizInteractive<CR>
 
 " Completion
 let s:completion_type = ''
