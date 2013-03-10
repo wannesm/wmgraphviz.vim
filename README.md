@@ -10,6 +10,7 @@ Features
 
 * Compiling: `:GraphvizCompile`, `<Leader>ll`
 * Viewing: `:GraphvizShow`, `<Leader>lv`
+* Interactive viewing + editing: `:GraphvizInteractive`, `<Leader>li`
 * Omnicompletion: `<C-X><C-O>`
 * Quickfix window for errors and warnings
 * Snipmate support

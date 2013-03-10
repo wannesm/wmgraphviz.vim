@@ -41,6 +41,10 @@ MAPPINGS                                                 *wmgraphviz-mappings*
 <LocalLeader>lv		|:GraphvizShow|
 	View the graph in the current dot-file.
 
+<LocalLeader>li		|:GraphvizInteractive|
+	Open interactive dot viewer that immediately redraws image when
+	dot-file is saved.
+
 ==============================================================================
 
 COMMANDS                                                 *wmgraphviz-commands*
@@ -58,6 +62,10 @@ COMMANDS                                                 *wmgraphviz-commands*
 
 *:GraphvizShow*
 	View the graph in the current dot-file.
+
+*:GraphvizInteractive*
+	Open interactive dot viewer that immediately redraws image when
+	dot-file is saved.
 
 ==============================================================================
 
