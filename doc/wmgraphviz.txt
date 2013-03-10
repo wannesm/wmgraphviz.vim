@@ -35,10 +35,10 @@ http://www.macports.org.
 
 MAPPINGS                                                 *wmgraphviz-mappings*
 
-<Leader>ll		|:GraphvizCompile|
+<LocalLeader>ll		|:GraphvizCompile|
 	Create the graph in the same directory as the current dot-file.
 
-<Leader>lv		|:GraphvizShow|
+<LocalLeader>lv		|:GraphvizShow|
 	View the graph in the current dot-file.
 
 ==============================================================================
@@ -120,17 +120,17 @@ you can use an extra command:
 
 Available keymapping:
 
-<Leader>lt		|:GraphvizCompileLaTeX|
+<LocalLeader>lt		|:GraphvizCompileLaTeX|
 
 Available settings:
 
-*g:WMGraphviz_tex2dot*                                     Default: 'dot2tex'
+*g:WMGraphviz_dot2tex*                                     Default: 'dot2tex'
 
 	Path to dot2tex binary.
 
-*g:WMGraphviz_tex2dotoptions*                              Default: '-tmath'
+*g:WMGraphviz_dot2texoptions*                              Default: '-tmath'
 
-	Options for tex2dot.
+	Options for dot2tex.
 
 ==============================================================================
 
