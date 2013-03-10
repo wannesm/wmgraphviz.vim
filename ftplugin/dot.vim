@@ -241,9 +241,17 @@ let s:fonts =  [
 \	]
 
 let s:style =  [
-\	{'word': 'bold'},
-\	{'word': 'dotted'},
-\	{'word': 'filled'}
+\	{'word': 'diagonals', 'menu': '[N]'},
+\	{'word': 'filled',    'menu': '[N]'},
+\	{'word': 'rounded',   'menu': '[N]'},
+\	{'word': 'striped',   'menu': '[N]'},
+\	{'word': 'wedged',    'menu': '[N]'},
+\	{'word': 'tapered',   'menu': '[E]'},
+\	{'word': 'bold',      'menu': '[E,N]'},
+\	{'word': 'dashed',    'menu': '[E,N]'},
+\	{'word': 'dotted',    'menu': '[E,N]'},
+\	{'word': 'invis',     'menu': '[E,N]'},
+\	{'word': 'solid',     'menu': '[E,N]'}
 \	]
 
 let s:dir =  [
