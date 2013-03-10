@@ -8,9 +8,9 @@ Vim plugin for [Graphviz](http://www.graphviz.org) `dot`.
 Features
 --------
 
-* Compiling: `:GraphvizCompile`, `<Leader>ll`
-* Viewing: `:GraphvizShow`, `<Leader>lv`
-* Interactive viewing + editing: `:GraphvizInteractive`, `<Leader>li`
+* Compiling: `:GraphvizCompile`, `<LocalLeader>ll`
+* Viewing: `:GraphvizShow`, `<LocalLeader>lv`
+* Interactive viewing + editing: `:GraphvizInteractive`, `<LocalLeader>li`
 * Omnicompletion: `<C-X><C-O>`
 * Quickfix window for errors and warnings
 * Snippet support
