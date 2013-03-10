@@ -14,6 +14,26 @@ if !exists('g:WMGraphviz_dot')
 	let g:WMGraphviz_dot = 'dot'
 endif
 
+if !exists('g:WMGraphviz_neato')
+	let g:WMGraphviz_neato = 'neato'
+endif
+
+if !exists('g:WMGraphviz_fdp')
+	let g:WMGraphviz_fdp = 'fdp'
+endif
+
+if !exists('g:WMGraphviz_sfdp')
+	let g:WMGraphviz_sfdp = 'sfdp'
+endif
+
+if !exists('g:WMGraphviz_twopi')
+	let g:WMGraphviz_twopi = 'twopi'
+endif
+
+if !exists('g:WMGraphviz_circo')
+	let g:WMGraphviz_circo = 'circo'
+endif
+
 if !exists('g:WMGraphviz_output')
 	let g:WMGraphviz_output = 'pdf'
 endif
@@ -50,17 +70,16 @@ endif
 
 " Compilation
 " If argument given, use it as output
-fu! GraphvizCompile(...)
-	if !executable(g:WMGraphviz_dot)
-		echoerr 'The "'.g:WMGraphviz_dot.'" executable was not found.'
+fu! GraphvizCompile(tool, output)
+	if !executable(a:tool)
+		echoerr 'The "'.a:tool.'" executable was not found.'
 		return
 	endif
 
-	let s:output = a:0 >= 1 ? a:1 : g:WMGraphviz_output
 	let s:logfile = expand('%:p:r').'.log'
 	" DOT command uses -O option instead of -o because this doesn't work if
 	" there are multiple graphs in the file.
-	let cmd = '!('.g:WMGraphviz_dot.' -O -T'.s:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' 2>&1) | tee '.shellescape(expand('%:p:r').'.log')
+	let cmd = '!('.a:tool.' -O -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' 2>&1) | tee '.shellescape(expand('%:p:r').'.log')
 	exec cmd
 	exec 'cfile '.escape(s:logfile, ' \"!?''')
 endfu
@@ -82,7 +101,7 @@ endfu
 " Viewing
 fu! GraphvizShow()
 	if !filereadable(expand('%:p').'.'.g:WMGraphviz_output)
-		call GraphvizCompile()
+		call GraphvizCompile(g:WMGraphviz_dot, g:WMGraphviz_output)
 	endif
 
 	if !executable(g:WMGraphviz_viewer)
@@ -94,10 +113,17 @@ fu! GraphvizShow()
 endfu
 
 " Available functions
-com! -nargs=0 GraphvizCompile :call GraphvizCompile()
-com! -nargs=0 GraphvizCompilePS :call GraphvizCompile('ps')
-com! -nargs=0 GraphvizCompilePDF :call GraphvizCompile('pdf')
+com! -nargs=0 GraphvizCompile :call GraphvizCompile(g:WMGraphviz_dot, g:WMGraphviz_output)
+com! -nargs=0 GraphvizCompilePS :call GraphvizCompile(g:WMGraphviz_dot, 'ps')
+com! -nargs=0 GraphvizCompilePDF :call GraphvizCompile(g:WMGraphviz_dot, 'pdf')
+
+com! -nargs=0 GraphvizCompileNeato :call GraphvizCompile(g:WMGraphviz_neato, g:WMGraphviz_output)
+com! -nargs=0 GraphvizCompileCirco :call GraphvizCompile(g:WMGraphviz_circo, g:WMGraphviz_output)
+com! -nargs=0 GraphvizCompileFdp :call GraphvizCompile(g:WMGraphviz_fdp, g:WMGraphviz_output)
+com! -nargs=0 GraphvizCompileSfdp :call GraphvizCompile(g:WMGraphviz_sfdp, g:WMGraphviz_output)
+com! -nargs=0 GraphvizCompileTwopi :call GraphvizCompile(g:WMGraphviz_twopi, g:WMGraphviz_output)
 com! -nargs=0 GraphvizCompileToLaTeX :call GraphvizCompileToLaTeX()
+
 com! -nargs=0 GraphvizShow : call GraphvizShow()
 
 " Mappings
