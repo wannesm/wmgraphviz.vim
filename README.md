@@ -36,6 +36,11 @@ This plugin combines nicely with:
 * [Snipmate](http://www.vim.org/scripts/script.php?script_id=2540)
 * [Dot2TeX](http://www.fauskes.net/code/dot2tex/)
 
+Contributions
+-------------
+
+* [Bjørn Forsman](https://github.com/bjornfor)
+
 Contact
 -------
 
