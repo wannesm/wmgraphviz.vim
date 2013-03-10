@@ -130,7 +130,7 @@ let s:attrs = [
 \	{'word': 'fontsize=',      'menu': 'Point size of label [E,G,N]'},
 \	{'word': 'group=',         'menu': 'Name of node group [N]'},
 \	{'word': 'headlabel=',     'menu': 'Label placed near head of edge [E]'},
-\	{'word': 'headport=',      'menu': 'Location of label [E]'},
+\	{'word': 'headport=',      'menu': 'Where on the node to attach head of edge [E]'},
 \	{'word': 'height=',        'menu': 'Height in inches [N]'},
 \	{'word': 'label=',         'menu': 'Any string [E,N]'},
 \	{'word': 'labelangle=',    'menu': 'Ange in degrees [E]'},
@@ -161,7 +161,7 @@ let s:attrs = [
 \	{'word': 'skew=',          'menu': 'Skewing node for for shape=polygon [N]'},
 \	{'word': 'style=',         'menu': 'Graphics options [E,N]'},
 \	{'word': 'taillabel=',     'menu': 'Label placed near tail of edge [E]'},
-\	{'word': 'tailport=',      'menu': '[E]'},
+\	{'word': 'tailport=',      'menu': 'Where on the node to attach tail of edge [E]'},
 \	{'word': 'weight=',        'menu': 'Integer cost of stretching an edge [E]'},
 \	{'word': 'width=',         'menu': 'width in inches [N]'}
 \	]
@@ -345,7 +345,7 @@ fu! GraphvizComplete(findstart, base)
 				let s:completion_type = 'arrowhead'
 			elseif labelstr == 'rank'
 				let s:completion_type = 'rank'
-			elseif labelstr == 'port'
+			elseif labelstr == 'headport' || labelstr == 'tailport'
 				let s:completion_type = 'port'
 			elseif labelstr == 'rankdir'
 				let s:completion_type = 'rankdir'
