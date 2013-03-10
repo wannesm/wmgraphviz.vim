@@ -185,11 +185,11 @@ let s:shapes = [
 \	{'word': 'point'},
 \	{'word': 'polygon'},
 \	{'word': 'record'},
-\	{'word': 'traingle'},
 \	{'word': 'trapezium'},
+\	{'word': 'triangle'},
 \	{'word': 'tripleoctagon'},
 \	{'word': 'Mcircle'},
-\	{'word': 'Mdiamon'},
+\	{'word': 'Mdiamond'},
 \	{'word': 'Mrecord'},
 \	{'word': 'Msquare'}
 \	]
