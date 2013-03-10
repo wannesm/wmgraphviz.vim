@@ -1,0 +1,22 @@
+snippet graph "Undirected graph" b
+//
+// `!v expand("%:t")`
+//
+// Created on `date +%d-%m-%Y` by `whoami`
+//
+graph ${1:`!v expand("%:rt")`} {
+	${2:a -- b;}
+}
+endsnippet
+
+snippet digraph "Directed graph" b
+//
+// `!v expand("%:t")`
+//
+// Created on `date +%d-%m-%Y` by `whoami`
+//
+digraph ${1:`!v expand("%:rt")`} {
+	${2:a -> b;}
+}
+endsnippet
+

@@ -4,7 +4,7 @@
 This plugin provides:
 - Compilation for Graphviz dot-files.
 - Omnicompletion for the attribute names and specific values.
-- Extensions for working with SnipMate and dot2tex.
+- Extensions for working with SnipMate, UltiSnips and dot2tex.
 
 ==============================================================================
 
@@ -14,7 +14,7 @@ This plugin provides:
 |wmgraphviz-omnicompletion|       OMNICOMPLETION
 |wmgraphviz-settings|             SETTINGS
 
-|wmgraphviz-snipmate|             SNIPMATE
+|wmgraphviz-snippets|             SNIPPETS
 |wmgraphviz-dot2tex|              DOT2TEX
 
 |wmgraphviz-contact|              CONTACT
@@ -109,9 +109,10 @@ SETTINGS                                                 *wmgraphviz-settings*
 
 ==============================================================================
 
-SNIPMATE                                                 *wmgraphviz-snipmate*
+SNIPPETS                                                 *wmgraphviz-snippets*
 
 If the snipMate plugin (http://www.vim.org/scripts/script.php?script_id=2540)
+or the UltiSnips plugin (http://www.vim.org/scripts/script.php?script_id=2715)
 is installed, there are some snippets provided. For example >
 	graph<TAB>
 	digraph<TAB>
