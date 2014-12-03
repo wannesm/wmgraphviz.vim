@@ -3,10 +3,10 @@
 " Email: wannesm@gmail.com
 " Version: 1.0.3
 
-if exists('s:loaded')
+if exists('b:wmgraphviz_dot_loaded')
 	finish
 endif
-let s:loaded = 1
+let b:wmgraphviz_dot_loaded = 1
 
 " Settings
 
