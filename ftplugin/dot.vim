@@ -68,6 +68,10 @@ if !exists('g:WMGraphviz_dot2texoptions')
 	let g:WMGraphviz_dot2texoptions = '-tmath'
 endif
 
+fu! GraphvizOutputFile(output)
+	return expand('%:p:r') . '.' . a:output
+endfu
+
 " Compilation
 " If argument given, use it as output
 fu! GraphvizCompile(tool, output)
@@ -76,10 +80,8 @@ fu! GraphvizCompile(tool, output)
 		return
 	endif
 
-	let s:logfile = expand('%:p:r').'.log'
-	" DOT command uses -O option instead of -o because this doesn't work if
-	" there are multiple graphs in the file.
-	let cmd = '!('.a:tool.' -O -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' 2>&1) | tee '.shellescape(expand('%:p:r').'.log')
+	let s:logfile = GraphvizOutputFile("log")
+	let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' > '.shellescape(GraphvizOutputFile(a:output)).' 2>&1) | tee '.shellescape(s:logfile)
 	exec cmd
 	exec 'cfile '.escape(s:logfile, ' \"!?''')
 endfu
@@ -90,17 +92,15 @@ fu! GraphvizCompileToLaTeX(...)
 		return
 	endif
 
-	let s:logfile = expand('%:p:r').'.log'
-	" DOT command uses -O option instead of -o because this doesn't work if
-	" there are multiple graphs in the file.
-	let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.shellescape(expand('%:p')).' > '.shellescape(expand('%:p:r').'.tex').') 2>&1) | tee '.shellescape(expand('%:p:r').'.log')
+	let s:logfile = GraphvizOutputFile("log")
+	let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.shellescape(expand('%:p')).' > '.shellescape(GraphvizOutputFile("tex")).') 2>&1) | tee '.shellescape(s:logfile)
 	exec cmd
 	exec 'cfile '.escape(s:logfile, ' \"!?''')
 endfu
 
 " Viewing
 fu! GraphvizShow()
-	if !filereadable(expand('%:p').'.'.g:WMGraphviz_output)
+	if !filereadable(GraphvizOutputFile(g:WMGraphviz_output))
 		call GraphvizCompile(g:WMGraphviz_dot, g:WMGraphviz_output)
 	endif
 
@@ -109,7 +109,7 @@ fu! GraphvizShow()
 		return
 	endif
 
-	exec '!'.g:WMGraphviz_viewer.' '.shellescape(expand('%:p').'.'.g:WMGraphviz_output).' &'
+	exec '!'.g:WMGraphviz_viewer.' '.shellescape(GraphvizOutputFile(g:WMGraphviz_output)).' &'
 endfu
 
 " Interactive viewing. "dot -Txlib <file.gv>" uses inotify to immediately
