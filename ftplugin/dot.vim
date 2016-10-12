@@ -81,7 +81,7 @@ fu! GraphvizCompile(tool, output)
 	endif
 
 	let s:logfile = GraphvizOutputFile("log")
-	let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' > '.shellescape(GraphvizOutputFile(a:output)).' 2>&1) | tee '.shellescape(s:logfile)
+	let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' -o '.shellescape(GraphvizOutputFile(a:output)).' 2>&1) | tee '.shellescape(s:logfile)
 	exec cmd
 	exec 'cfile '.escape(s:logfile, ' \"!?''')
 endfu
