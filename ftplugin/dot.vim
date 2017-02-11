@@ -88,7 +88,6 @@ fu! GraphvizCompile(tool, output)
 
 	if has('win32')
 	    exe 'set makeprg='.a:tool.'\ -T'.a:output.'\ '.substitute(g:WMGraphviz_shelloptions, ' ', '\\ ', 'g').'\ %\ -o\ %:p:.:r.'.a:output
-	    set efm=%EError:\ %f:%l:%m,%+Ccontext:\ %.%#,%WWarning:\ %m
 	    exec 'make'
 	else
 	    let s:logfile = GraphvizOutputFile("log")
