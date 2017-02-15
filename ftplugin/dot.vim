@@ -51,6 +51,8 @@ if !exists('g:WMGraphviz_viewer')
 				let g:WMGraphviz_viewer = 'acroread'
 			endif
 		endif
+	elseif has('win32')
+		let g:WMGraphviz_viewer = ' start'
 	else
 		let g:WMGraphviz_viewer = 'open'
 	endif
@@ -68,6 +70,10 @@ if !exists('g:WMGraphviz_dot2texoptions')
 	let g:WMGraphviz_dot2texoptions = '-tmath'
 endif
 
+if !exists('g:WMGraphviz_tool')
+    let g:WMGraphviz_tool = 'dot'
+endif
+
 fu! GraphvizOutputFile(output)
 	return expand('%:p:r') . '.' . a:output
 endfu
@@ -80,10 +86,15 @@ fu! GraphvizCompile(tool, output)
 		return
 	endif
 
-	let s:logfile = GraphvizOutputFile("log")
-	let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' -o '.shellescape(GraphvizOutputFile(a:output)).' 2>&1) | tee '.shellescape(s:logfile)
-	exec cmd
-	exec 'cfile '.escape(s:logfile, ' \"!?''')
+	if has('win32')
+	    exe 'set makeprg='.a:tool.'\ -T'.a:output.'\ '.substitute(g:WMGraphviz_shelloptions, ' ', '\\ ', 'g').'\ %\ -o\ %:p:.:r.'.a:output
+	    exec 'make'
+	else
+	    let s:logfile = GraphvizOutputFile("log")
+	    let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' -o '.shellescape(GraphvizOutputFile(a:output)).' 2>&1) | tee '.shellescape(s:logfile)
+	    exec cmd
+	    exec 'cfile '.escape(s:logfile, ' \"!?''')
+	endif
 endfu
 
 fu! GraphvizCompileToLaTeX(...)
@@ -92,10 +103,15 @@ fu! GraphvizCompileToLaTeX(...)
 		return
 	endif
 
-	let s:logfile = GraphvizOutputFile("log")
-	let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.shellescape(expand('%:p')).' > '.shellescape(GraphvizOutputFile("tex")).') 2>&1) | tee '.shellescape(s:logfile)
-	exec cmd
-	exec 'cfile '.escape(s:logfile, ' \"!?''')
+	if has('win32')
+	    let cmd = '!('.g:WMGraphviz_tool.' -Txdot '.g:WMGraphviz_shelloptions.' % | '.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' > %:p:.:r.tex)'
+	    exec cmd
+	else
+	    let s:logfile = GraphvizOutputFile("log")
+	    let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.shellescape(expand('%:p')).' > '.shellescape(GraphvizOutputFile("tex")).') 2>&1) | tee '.shellescape(s:logfile)
+	    exec cmd
+	    exec 'cfile '.escape(s:logfile, ' \"!?''')
+	endif
 endfu
 
 " Viewing
@@ -104,12 +120,17 @@ fu! GraphvizShow()
 		call GraphvizCompile(g:WMGraphviz_dot, g:WMGraphviz_output)
 	endif
 
-	if !executable(g:WMGraphviz_viewer)
+	if !has('win32')
+	    if !executable(g:WMGraphviz_viewer)
 		echoerr 'Viewer program not found: "'.g:WMGraphviz_viewer.'"'
 		return
+	    endif
+
+	    exec '!'.g:WMGraphviz_viewer.' '.shellescape(GraphvizOutputFile(g:WMGraphviz_output)).' &'
+	else
+	    exec '!'.g:WMGraphviz_viewer.' /b %:p:.:r.'.g:WMGraphviz_output
 	endif
 
-	exec '!'.g:WMGraphviz_viewer.' '.shellescape(GraphvizOutputFile(g:WMGraphviz_output)).' &'
 endfu
 
 " Interactive viewing. "dot -Txlib <file.gv>" uses inotify to immediately
@@ -124,10 +145,11 @@ fu! GraphvizInteractive()
 endfu
 
 " Available functions
-com! -nargs=0 GraphvizCompile :call GraphvizCompile(g:WMGraphviz_dot, g:WMGraphviz_output)
+com! -nargs=0 GraphvizCompile :call GraphvizCompile(g:WMGraphviz_tool, g:WMGraphviz_output)
 com! -nargs=0 GraphvizCompilePS :call GraphvizCompile(g:WMGraphviz_dot, 'ps')
 com! -nargs=0 GraphvizCompilePDF :call GraphvizCompile(g:WMGraphviz_dot, 'pdf')
 
+com! -nargs=0 GraphvizCompileDot :call GraphvizCompile(g:WMGraphviz_dot, g:WMGraphviz_output)
 com! -nargs=0 GraphvizCompileNeato :call GraphvizCompile(g:WMGraphviz_neato, g:WMGraphviz_output)
 com! -nargs=0 GraphvizCompileCirco :call GraphvizCompile(g:WMGraphviz_circo, g:WMGraphviz_output)
 com! -nargs=0 GraphvizCompileFdp :call GraphvizCompile(g:WMGraphviz_fdp, g:WMGraphviz_output)
