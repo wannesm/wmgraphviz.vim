@@ -94,6 +94,7 @@ fu! GraphvizCompile(tool, output)
 	    let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' -o '.shellescape(GraphvizOutputFile(a:output)).' 2>&1) | tee '.shellescape(s:logfile)
 	    exec cmd
 	    exec 'cfile '.escape(s:logfile, ' \"!?''')
+	    call delete(s:logfile)
 	endif
 endfu
 
@@ -111,6 +112,7 @@ fu! GraphvizCompileToLaTeX(...)
 	    let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.shellescape(expand('%:p')).' > '.shellescape(GraphvizOutputFile("tex")).') 2>&1) | tee '.shellescape(s:logfile)
 	    exec cmd
 	    exec 'cfile '.escape(s:logfile, ' \"!?''')
+	    call delete(s:logfile)
 	endif
 endfu
 
