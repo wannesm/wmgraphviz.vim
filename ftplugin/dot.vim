@@ -78,6 +78,10 @@ fu! GraphvizOutputFile(output)
 	return expand('%:p:r') . '.' . a:output
 endfu
 
+fu! GraphvizLogFile()
+	return tempname().'.log'
+endfu
+
 " Compilation
 " If argument given, use it as output
 fu! GraphvizCompile(tool, output)
@@ -90,7 +94,7 @@ fu! GraphvizCompile(tool, output)
 	    exe 'set makeprg='.a:tool.'\ -T'.a:output.'\ '.substitute(g:WMGraphviz_shelloptions, ' ', '\\ ', 'g').'\ %\ -o\ %:p:.:r.'.a:output
 	    exec 'make'
 	else
-	    let s:logfile = GraphvizOutputFile("log")
+	    let s:logfile = GraphvizLogFile()
 	    let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' -o '.shellescape(GraphvizOutputFile(a:output)).' 2>&1) | tee '.shellescape(s:logfile)
 	    exec cmd
 	    exec 'cfile '.escape(s:logfile, ' \"!?''')
@@ -108,7 +112,7 @@ fu! GraphvizCompileToLaTeX(...)
 	    let cmd = '!('.g:WMGraphviz_tool.' -Txdot '.g:WMGraphviz_shelloptions.' % | '.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' > %:p:.:r.tex)'
 	    exec cmd
 	else
-	    let s:logfile = GraphvizOutputFile("log")
+	    let s:logfile = GraphvizLogFile()
 	    let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.shellescape(expand('%:p')).' > '.shellescape(GraphvizOutputFile("tex")).') 2>&1) | tee '.shellescape(s:logfile)
 	    exec cmd
 	    exec 'cfile '.escape(s:logfile, ' \"!?''')
