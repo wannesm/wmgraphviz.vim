@@ -45,6 +45,7 @@ Contributions
 * [marcovzla](https://github.com/marcovzla)
 * [Johannes Holzfuß](https://github.com/DataWraith)
 * [sandnon](https://github.com/sandnon)
+* [Hongbo Liu](https://github.com/hiberabyss)
 
 Contact
 -------
