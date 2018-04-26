@@ -95,10 +95,17 @@ fu! GraphvizCompile(tool, output)
 	    exec 'make'
 	else
 	    let s:logfile = GraphvizLogFile()
-	    let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' -o '.shellescape(GraphvizOutputFile(a:output)).' 2>&1) | tee '.shellescape(s:logfile)
-	    exec cmd
-	    exec 'cfile '.escape(s:logfile, ' \"!?''')
-	    call delete(s:logfile)
+	    let cmd = '!('.a:tool.' -T'.a:output.' '.g:WMGraphviz_shelloptions.' '.shellescape(expand('%:p')).' -o '.shellescape(GraphvizOutputFile(a:output)).' &> '.shellescape(s:logfile) . ')'
+	    silent! exec cmd
+	    silent! exec 'cfile '.escape(s:logfile, ' \"!?''')
+
+        if len(getqflist()) > 0
+            copen
+        else
+            cclose
+        endif
+
+        call delete(s:logfile)
 	endif
 endfu
 
@@ -114,7 +121,7 @@ fu! GraphvizCompileToLaTeX(...)
 	else
 	    let s:logfile = GraphvizLogFile()
 	    let cmd = '!(('.g:WMGraphviz_dot2tex.' '.g:WMGraphviz_dot2texoptions.' '.shellescape(expand('%:p')).' > '.shellescape(GraphvizOutputFile("tex")).') 2>&1) | tee '.shellescape(s:logfile)
-	    exec cmd
+	    silent exec cmd
 	    exec 'cfile '.escape(s:logfile, ' \"!?''')
 	    call delete(s:logfile)
 	endif
@@ -132,7 +139,7 @@ fu! GraphvizShow()
 		return
 	    endif
 
-	    exec '!'.g:WMGraphviz_viewer.' '.shellescape(GraphvizOutputFile(g:WMGraphviz_output)).' &'
+	    silent exec '!'.g:WMGraphviz_viewer.' '.shellescape(GraphvizOutputFile(g:WMGraphviz_output)).' &'
 	else
 	    exec '!'.g:WMGraphviz_viewer.' /b %:p:.:r.'.g:WMGraphviz_output
 	endif
@@ -147,7 +154,7 @@ fu! GraphvizInteractive()
 		return
 	endif
 
-	exec '!'.g:WMGraphviz_dot.' -Txlib '.shellescape(expand('%:p')).' &'
+	silent exec '!'.g:WMGraphviz_dot.' -Txlib '.shellescape(expand('%:p')).' &'
 endfu
 
 " Available functions
